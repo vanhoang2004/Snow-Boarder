@@ -5,13 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class CrashDetector : MonoBehaviour
 {
-    [SerializeField] float loadDelay = 0.1f;
+    [SerializeField] float loadDelay = 5f;
+    [SerializeField] ParticleSystem crashEffect;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Ground")
         {
+            FindObjectOfType<PlayerController>().DisableMove();
             Debug.Log("oops, crash my head!");
             Invoke("ReloadScene", loadDelay);
+            crashEffect.Play();
         }
     }
     void ReloadScene()
